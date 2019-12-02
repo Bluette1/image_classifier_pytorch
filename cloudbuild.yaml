@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/python-cloudbuild' # Cloud Build automatically substitutes $PROJECT_ID for your Project ID.  
+  entrypoint: '/bin/bash'
+  args: ['-c','virtualenv /workspace/venv' ]
+  # Creates a Python virtualenv stored in /workspace/venv that will persist across container runs.  
+- name: 'gcr.io/$PROJECT_ID/python-cloudbuild'
+  entrypoint: 'venv/bin/pip'
+  args: ['install', '-V', '-r', 'requirements.txt']
+  # Installs any dependencies listed in the project's requirements.txt.  
+- name: 'gcr.io/$PROJECT_ID/python-cloudbuild'
+  entrypoint: 'venv/bin/python'
+  args: ['-m', 'unittest', 'discover', '-p "*_test.py']
+  # Runs pytest from the virtual environment (with all requirements)  
+
+
